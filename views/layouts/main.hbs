@@ -5,11 +5,35 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css'
+    integrity='sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w=='
+    crossorigin='anonymous' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'
+    integrity='sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=='
+    crossorigin='anonymous' />
   <title>Expense-Tracker</title>
 </head>
 
+<nav class="navbar bg-light">
+  <div class="container-fluid">
+    {{!-- isAuthenticated --}}
+    <a class="navbar-brand text-dark" href="/">家庭記帳本</a>
+    {{!-- isAuthenticated --}}
+    <a href="/users/logout" class="btn btn-light">登出</a>
+    <a href="/users/login" class="btn btn-light">登入</a>
+  </div>
+</nav>
+
 <body>
-  {{{body}}}
+  <div class="container my-4 w-70">
+    {{{body}}}
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js'
+      integrity='sha512-XLo6bQe08irJObCc86rFEKQdcFYbGGIHVXcfMsxpbvF8ompmd1SNJjqVY5hmjQ01Ts0UmmSQGfqpt3fGjm6pGA=='
+      crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js'
+      integrity='sha512-OvBgP9A2JBgiRad/mM36mkzXSXaJE9BEIENnVEmeZdITvwT09xnxLtT4twkCa8m/loMbPHsvPl0T8lRGVBwjlQ=='
+      crossorigin='anonymous'></script>
 </body>
 
 </html>
