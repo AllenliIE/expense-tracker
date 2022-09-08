@@ -47,6 +47,37 @@ app.post('/records', (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.get('/records/:id/edit', (req, res) => {
+  const id = req.params.id
+
+  return Record.findById(id)
+    .then((record) => res.render('edit', { record }))
+    .catch(error => console.log(error))
+})
+
+app.post('/records/:id/edit', (req, res) => {
+  const id = req.params.id
+  const { name, date, amount } = req.body
+
+  return Record.findById(id)
+    .then(record => {
+      record.name = name
+      record.date = date
+      record.amount = amount
+      return record.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+app.post('/records/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Record.findById(id)
+    .then(record => record.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 //Setting port 3000
 app.listen(port, () => {
   console.log(`Expense-Tracker is running on http://localhost:${port}`)

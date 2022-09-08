@@ -25,10 +25,12 @@
       <td>{{this.name}}<br>{{this.date}}/td>
       <td>${{this.amount}}</td>
       <td>
-        <a href="./records/{{this._id}}/edit">編輯</a>
+        <a href="./records/{{ this._id }}/edit" class="btn btn-outline-primary">編輯</a>
       </td>
       <td>
-        <a href="./records/{{this._id}}/delete">刪除</a>
+        <form action="./records/{{ this._id }}/delete" method="POST" style="display: inline">
+          <button type="submit" class="btn btn-outline-danger">刪除</a>
+        </form>
       </td>
     </tr>
     {{/each}}
