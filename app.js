@@ -26,11 +26,24 @@ db.once('open', () => {
 })
 
 app.use(express.urlencoded({ extended: true }))
+
 //Setting record to render
 app.get('/', (req, res) => {
   Record.find()
     .lean()
     .then(records => res.render('index', { records }))
+    .catch(error => console.log(error))
+})
+
+app.get('/records/new', (req, res) => {
+  return res.render('new')
+})
+
+app.post('/records', (req, res) => {
+  const { name, date, amount } = req.body
+
+  return Record.create({ name, date, amount })
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
