@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const Record = require('./models/record')
 //Use handlebars to template engine setting
 const exphbs = require('express-handlebars')
 //Setting exphbs and parameters
@@ -22,9 +23,12 @@ db.once('open', () => {
   console.log('Mongodb connected!')
 })
 
-//Setting index.js router
+//Setting record to render
 app.get('/', (req, res) => {
-  res.render('index')
+  Record.find()
+    .lean()
+    .then(records => res.render('index', { records }))
+    .catch(error => console.log(error))
 })
 
 //Setting port 3000
