@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 const Record = require('./models/record')
+//Setting body-[arser
+const bodyParser = require('body-parser')
 //Use handlebars to template engine setting
 const exphbs = require('express-handlebars')
 //Setting exphbs and parameters
@@ -23,6 +25,7 @@ db.once('open', () => {
   console.log('Mongodb connected!')
 })
 
+app.use(express.urlencoded({ extended: true }))
 //Setting record to render
 app.get('/', (req, res) => {
   Record.find()
