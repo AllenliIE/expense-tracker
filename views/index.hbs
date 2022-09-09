@@ -22,13 +22,13 @@
     {{#each records}}
     <tr>
       <td><i class="{{this.icon}}" style="color: #61CECD "></i></td>
-      <td>{{this.name}}<br>{{this.date}}/td>
+      <td>{{this.name}}<br>{{this.date}}</td>
       <td>${{this.amount}}</td>
       <td>
         <a href="./records/{{ this._id }}/edit" class="btn btn-outline-primary">編輯</a>
       </td>
       <td>
-        <form action="./records/{{ this._id }}/delete" method="POST" style="display: inline">
+        <form action="./records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline">
           <button type="submit" class="btn btn-outline-danger">刪除</a>
         </form>
       </td>

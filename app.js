@@ -5,6 +5,8 @@ const port = 3000
 const Record = require('./models/record')
 //Setting body-[arser
 const bodyParser = require('body-parser')
+//Setting method-override
+const methodOverride = require('method-override')
 //Use handlebars to template engine setting
 const exphbs = require('express-handlebars')
 //Setting exphbs and parameters
@@ -26,6 +28,7 @@ db.once('open', () => {
 })
 
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 //Setting record to render
 app.get('/', (req, res) => {
@@ -55,7 +58,7 @@ app.get('/records/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/records/:id/edit', (req, res) => {
+app.put('/records/:id', (req, res) => {
   const id = req.params.id
   const { name, date, amount } = req.body
 
@@ -70,7 +73,7 @@ app.post('/records/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/records/:id/delete', (req, res) => {
+app.delete('/records/:id', (req, res) => {
   const id = req.params.id
   return Record.findById(id)
     .then(record => record.remove())
