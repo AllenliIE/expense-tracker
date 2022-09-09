@@ -3,10 +3,7 @@ const Record = require('../record')
 const SEED_RECORD = require('./records.json')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('Mongodb error!')
-})
+const db = require('../../config/mongoose')
 db.once('open', () => {
   console.log('recordSeeder connected!')
   for (let i = 0; i < SEED_RECORD.records.length; i++) {

@@ -3,10 +3,7 @@ const Category = require('../category')
 const SEED_CATEGORY = require('./categorys.json')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('Mongodb error!')
-})
+const db = require('../../config/mongoose')
 db.once('open', () => {
   console.log('categorySeeder connected!')
   for (let i = 0; i < SEED_CATEGORY.categorys.length; i++) {
