@@ -1,7 +1,7 @@
 //Setting Server
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 //Setting express-session
 const session = require('express-session')
 //Setting body-parser
@@ -21,8 +21,12 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 //Open handlebars
 app.set('view engine', 'hbs')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
