@@ -6,6 +6,8 @@ const port = 3000
 const session = require('express-session')
 //Setting body-parser
 const bodyParser = require('body-parser')
+//Setting passport
+const usePassport = require('./config/passport')
 //Setting method-override
 const methodOverride = require('method-override')
 //Setting routes
@@ -27,6 +29,7 @@ require('./config/mongoose')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+usePassport(app)
 app.use(routes)
 
 //Setting port 3000
