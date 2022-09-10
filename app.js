@@ -10,6 +10,8 @@ const bodyParser = require('body-parser')
 const usePassport = require('./config/passport')
 //Setting method-override
 const methodOverride = require('method-override')
+//Setting connect-flash
+const flash = require('connect-flash')
 //Setting routes
 const routes = require('./routes')
 //Use handlebars to template engine setting
@@ -30,6 +32,16 @@ require('./config/mongoose')
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 usePassport(app)
+
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  next()
+})
+
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
