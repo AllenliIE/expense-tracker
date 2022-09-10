@@ -16,11 +16,14 @@
 
 <nav class="navbar bg-light">
   <div class="container-fluid">
-    {{!-- isAuthenticated --}}
-    <a class="navbar-brand text-dark" href="/">家庭記帳本</a>
-    {{!-- isAuthenticated --}}
+    <a class="navbar-brand text-dark" href="/">
+      {{#if isAuthenticated}}{{ user.name}}'s {{/if}}
+      家庭記帳本</a>
+    {{#if isAuthenticated}}
     <a href="/users/logout" class="btn btn-light">登出</a>
+    {{else}}
     <a href="/users/login" class="btn btn-light">登入</a>
+    {{/if}}
   </div>
 </nav>
 
