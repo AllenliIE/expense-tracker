@@ -2,6 +2,8 @@
 const express = require('express')
 const app = express()
 const port = 3000
+//Setting express-session
+const session = require('express-session')
 //Setting body-parser
 const bodyParser = require('body-parser')
 //Setting method-override
@@ -14,6 +16,12 @@ const exphbs = require('express-handlebars')
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 //Open handlebars
 app.set('view engine', 'hbs')
+
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 require('./config/mongoose')
 
