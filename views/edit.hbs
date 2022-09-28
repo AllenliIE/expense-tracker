@@ -6,19 +6,23 @@
           <label class="col-3 fs-6">* 必填欄位</label>
           <label class="col-9 fs-5">請修改你的支出</label>
         </div>
-        <form action="/records/{{record._id}}?_method=PUT" method="POST">
+        <form action="/records/{{record._id}}/edit?_method=PUT" method="POST">
           <div class="row align-items-center mb-5">
             <label for="name" class="col-auto" required>名稱* ：</label>
-            <input type="text" name="name" id="name" placeholder="name" style="width: 180px; height: 30px;">
+            <input type="text" name="name" id="name" placeholder="name" style="width: 180px; height: 30px;"
+              value="{{record.name}}">
           </div>
           <div class="row align-items-center mb-5">
             <label for="date" class="col-auto" required>日期* ：</label>
-            <input type="date" name="date" id="date" style="width: 180px; height: 30px;">
+            <input type="date" name="date" id="recordDate" style="width: 180px; height: 30px;" value="{{record.date}}">
           </div>
           <div class="row align-items-center mb-5">
             <label for="category" class="col-auto" required>類別* ：</label>
-            <select name="category" id="category" class="col-auto" style="width: 180px; height: 30px;" required>
-              <option value="{{record.id}}">{{record.name}}</option>
+            <select name="categoryId" id="category" class="col-auto" style="width: 180px; height: 30px;" required>
+              <option value={{record.categoryId._id}} selected>{{record.categoryId.name}}</option>
+              {{#each category}}
+              <option value="{{this._id}}">{{this.name}}</option>
+              {{/each}}
             </select>
           </div>
           <div class="row align-items-center mb-5">

@@ -1,52 +1,58 @@
 const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
+const Category = require('../../models/category')
 
-router.get('/new', (req, res) => {
-  return res.render('new')
+router.get('/new', async (req, res) => {
+  try {
+    const category = await Category.find().lean().exec()
+    return res.render('new', { category })
+  } catch (err) {
+    console.log(err)
+  }
 })
 
-router.post('/', (req, res) => {
+router.post('/new', (req, res) => {
   const userId = req.user._id //add userId
-  const { name, date, amount } = req.body
+  const { name, date, amount, categoryId } = req.body
 
-  return Record.create({ name, date, amount, userId }) //add userId
+  return Record.create({ name, date, amount, userId, categoryId }) //add userId
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
-router.get('/:id/edit', (req, res) => {
-  const userId = req.user._id //add userId
+router.get('/:id/edit', async (req, res) => {
   const _id = req.params.id
-
-  return Record.findOne({ _id, userId }) //add userId
-    .then((record) => res.render('edit', { record }))
-    .catch(error => console.log(error))
+  try {
+    const record = await Record.findOne({ _id }).populate('categoryId').lean().exec()
+    const category = await Category.find({ _id: { $ne: record.categoryId } }).lean().exec()
+    res.render('edit', { record, category })
+  } catch (error) {
+    console.log(error.stack)
+  }
 })
 
-router.put('/:id', (req, res) => {
-  const userId = req.user._id //add userId
+router.put('/:id/edit', async (req, res) => {
   const _id = req.params.id
-  const { name, date, amount } = req.body
-
-  return Record.findOne({ _id, userId }) //add userId
-    .then(record => {
-      record.name = name
-      record.date = date
-      record.amount = amount
-      return record.save()
-    })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+  const { name, categoryId, date, amount } = req.body
+  try {
+    let record = await Record.findOne({ _id }).lean().exec()
+    console.log(record)
+    await Record.findByIdAndUpdate({ _id }, { name, categoryId, date, amount }).exec()
+    res.redirect('/')
+  } catch (error) {
+    console.log(error.stack)
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  const userId = req.user._id //add userId
+router.delete('/:id/delete', async (req, res) => {
   const _id = req.params.id
-  return Record.findOne({ _id, userId }) //add userId
-    .then(record => record.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+  try {
+    await Record.findByIdAndDelete({ _id }).exec()
+    res.redirect('/')
+  } catch (error) {
+    console.log(error.stack)
+  }
 })
 
 module.exports = router
