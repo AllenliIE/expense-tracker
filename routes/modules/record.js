@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
+const dayjs = require('dayjs')
 
 router.get('/new', async (req, res) => {
   try {
@@ -15,7 +16,6 @@ router.get('/new', async (req, res) => {
 router.post('/new', (req, res) => {
   const userId = req.user._id //add userId
   const { name, date, amount, categoryId } = req.body
-
   return Record.create({ name, date, amount, userId, categoryId }) //add userId
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
@@ -26,6 +26,7 @@ router.get('/:id/edit', async (req, res) => {
   try {
     const record = await Record.findOne({ _id }).populate('categoryId').lean().exec()
     const category = await Category.find({ _id: { $ne: record.categoryId } }).lean().exec()
+    record.date = dayjs(record.date).format('YYYY-MM-DD')
     res.render('edit', { record, category })
   } catch (error) {
     console.log(error.stack)

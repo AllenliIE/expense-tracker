@@ -4,12 +4,12 @@
       onchange="this.form.submit()">
       {{#if selectedCategory}}
       <option value="{{selectedCategory._id}}" selected>{{selectedCategory.name}}</option>
-      <option>分類</option>
+      <option value="">全部分類</option>
       {{#each otherCategory}}
       <option value="{{this._id}}">{{this.name}}</option>
       {{/each}}
       {{else}}
-      <option selected>分類</option>
+      <option value="" selected>全部分類</option>
       {{#each category}}
       <option value="{{this._id}}">{{this.name}}</option>
       {{/each}}
