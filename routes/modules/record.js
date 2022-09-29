@@ -4,23 +4,6 @@ const Record = require('../../models/record')
 const Category = require('../../models/category')
 const dayjs = require('dayjs')
 
-router.get('/category/:categoryName', async (req, res) => {
-  const userId = req.user._id
-  const categoryName = req.params.categoryName
-
-  Record.find({ categoryName, userId })
-    .lean()
-    .then(records => {
-      let totalAmount = 0
-      records.forEach(item => {
-        totalAmount += item.amount
-        item.date = dayjs(item.date).format('YYYY/MM/DD')
-      })
-      res.render('index', { records, totalAmount })
-    })
-    .catch(error => console.error(error))
-})
-
 router.get('/new', async (req, res) => {
   try {
     const category = await Category.find().lean().exec()
@@ -33,11 +16,9 @@ router.get('/new', async (req, res) => {
 router.post('/new', (req, res) => {
   const userId = req.user._id //add userId
   const { name, date, amount, categoryId } = req.body
-
   return Record.create({ name, date, amount, userId, categoryId }) //add userId
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
-
 })
 
 router.get('/:id/edit', async (req, res) => {
