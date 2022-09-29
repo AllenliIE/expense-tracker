@@ -9,35 +9,40 @@ let SEED_RECORD = [
     date: '2022-09-28',
     amount: 60,
     userId: 1,
-    categoryId: 4
+    categoryId: 4,
+    categoryName: '餐飲食品'
   },
   {
     name: '晚餐',
     date: '2022-09-28',
     amount: 60,
     userId: 1,
-    categoryId: 4
+    categoryId: 4,
+    categoryName: '餐飲食品'
   },
   {
     name: '捷運',
     date: '2022-09-28',
     amount: 120,
     userId: 1,
-    categoryId: 2
+    categoryId: 2,
+    categoryName: '交通出行'
   },
   {
     name: '電影：驚奇隊長',
     date: '2022-09-28',
     amount: 220,
     userId: 2,
-    categoryId: 3
+    categoryId: 3,
+    categoryName: '休閒娛樂'
   },
   {
     name: '租金',
     date: '2022-09-28',
     amount: 25000,
     userId: 1,
-    categoryId: 1
+    categoryId: 1,
+    categoryName: '家居物業'
   }
 ]
 
