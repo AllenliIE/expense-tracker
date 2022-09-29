@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   const category = await Category.find().lean()
   let totalAmount = 0
   records.forEach(item => totalAmount += item.amount)
-  records.forEach(records => records.date = records.date.toLocaleDateString('zh-TW'))
+  // records.forEach(records => records.date = records.date.toLocaleDateString('zh-TW'))
   res.render('index', { category, records, totalAmount })
 })
 
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
     .lean()
   let totalAmount = 0
   records.forEach(item => totalAmount += item.amount)
-  records.forEach(records => records.date = records.date.toLocaleDateString('zh-TW'))
+  // records.forEach(records => records.date = records.date.toLocaleDateString('zh-TW'))
   res.render('index', { selectedCategory, otherCategory, records, totalAmount })
 })
 

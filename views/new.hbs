@@ -14,12 +14,12 @@
           </div>
           <div class="row align-items-center mb-5">
             <label for="date" class="col-auto" required>日期* ：</label>
-            <input type="date" name="date" id="recordDate" style="width: 180px; height: 30px;" value="{{date}}">
+            <input type="date" name="date" id="date" style="width: 180px; height: 30px;" value="{{date}}">
           </div>
           <div class="row align-items-center mb-5">
             <label for="category" class="col-auto" required>類別* ：</label>
             <select name="categoryId" id="category" class="col-auto" style="width: 180px; height: 30px;" required>
-              <option selected>分類</option>
+              <option value="" selected disabled>分類</option>
               {{#each category}}
               <option value="{{this._id}}">{{this.name}}</option>
               {{/each}}
