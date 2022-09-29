@@ -4,7 +4,7 @@ const Record = require('../../models/record')
 const Category = require('../../models/category')
 const dayjs = require('dayjs')
 
-router.get('/category/:categoryName', (req, res) => {
+router.get('/category/:categoryName', async (req, res) => {
   const userId = req.user._id
   const categoryName = req.params.categoryName
 
@@ -32,12 +32,12 @@ router.get('/new', async (req, res) => {
 
 router.post('/new', (req, res) => {
   const userId = req.user._id //add userId
-  const categoryName = req.params.categoryName
   const { name, date, amount, categoryId } = req.body
-  console.log(categoryId, categoryName)
-  return Record.create({ name, date, amount, userId, categoryId, categoryName }) //add userId
+
+  return Record.create({ name, date, amount, userId, categoryId }) //add userId
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
+
 })
 
 router.get('/:id/edit', async (req, res) => {
