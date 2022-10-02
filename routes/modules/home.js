@@ -13,32 +13,40 @@ router.get('/', async (req, res) => {
     totalAmount += item.amount
     item.date = dayjs(item.date).format('YYYY/MM/DD')
   })
-
   res.render('index', { category, records, totalAmount })
 })
 
-router.post('/', async (req, res, next) => {
-  try {
-    const userId = req.user._id
-    const categoryOption = req.body.categoryOption
-    const selectedCategory = await Category.findById(categoryOption).lean()
-    const otherCategory = await Category.find({ _id: { $ne: categoryOption } }).lean()
+router.get('/category', (req, res) => {
+  const userId = req.user._id
+  const categoryId = req.query.category_id
 
-    const records = await Record
-      .find({ userId, categoryId: categoryOption })
-      .populate('categoryId')
-      .lean()
-    let totalAmount = 0
-    records.forEach(item => {
-      totalAmount += item.amount
-      item.date = dayjs(item.date).format('YYYY/MM/DD')
+  Category.find()
+    .lean()
+    .then(category => {
+      if (categoryId === 'all') {
+        res.redirect('/')
+      } else {
+        Record.find({ userId, categoryId })
+          .populate('categoryId')
+          .lean()
+          .then(records => {
+            let totalAmount = 0
+            records.forEach(item => {
+              totalAmount += item.amount
+              item.date = dayjs(item.date).format('YYYY/MM/DD')
+            })
+            category.forEach(categorys => {
+              if (categoryId.toString() === (categorys._id).toString()) {
+                categorys.boolean = true
+              } else {
+                categorys.boolean = false
+              }
+            })
+            res.render('index', { records, category, totalAmount })
+          })
+      }
     })
-    console.log(selectedCategory)
-    res.render('index', { selectedCategory, otherCategory, records, totalAmount })
-  } catch (err) {
-    next(err)
-  }
+    .catch(err => console.log(err))
 })
 
 module.exports = router
-

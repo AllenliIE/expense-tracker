@@ -1,24 +1,13 @@
 <main class="text-center">
-  <form action="/" method="post">
-    <select id="categories" name="categoryOption" id="categoryOption" class="form-select form-select-lg mb-3"
-      onchange="this.form.submit()">
-      <a href="/" class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1"
-        data-bs-toggle="dropdown" aria-expanded="false" style="width:250px;">
-        類別
-      </a>
-      {{#if selectedCategory}}
-      <option value="{{selectedCategory._id}}" selected>{{selectedCategory.name}}</option>
-      {{#each otherCategory}}
-      <option value="{{this._id}}">{{this.name}}</option>
-      {{/each}}
-      {{else}}
-      <option value="" selected>全部分類</option>
-      {{#each category}}
-      <option value="{{this._id}}">{{this.name}}</option>
-      {{/each}}
-      {{/if}}
-    </select>
-    <a class="dropdown-item" href="/">全部分類</a>
+  <form action="/category" method="GET">
+    <div class="form-group mb-3  mt-5">
+      <select class="form-select fs-3" onchange="form.submit()" id="category_id" name="category_id">
+        <option value="all" {{#if all}} selected {{/if}}>全部分類</option>
+        {{#each category}}
+        <option value="{{this._id}}" {{#if this.boolean}} selected {{/if}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
   </form>
   <div class="mt-3 d-flex flex-row justify-content-evenly">
     <h5>總金額：</h4>
